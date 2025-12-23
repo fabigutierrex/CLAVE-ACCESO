@@ -1,88 +1,182 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clave de Acceso</title>
-    <style>
-        body {
-            margin: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: radial-gradient(circle at top, #020617, #000);
-            font-family: Arial, Helvetica, sans-serif;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clave de Acceso</title>
 
-        .container {
-            text-align: center;
-        }
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: radial-gradient(circle at top, #020617, #000);
+        font-family: Arial, Helvetica, sans-serif;
+    }
 
-        h1 {
-            color: #00f7ff;
-            font-size: 1.8rem;
-            margin-bottom: 30px;
-            text-shadow:
-                0 0 5px #00f7ff,
-                0 0 10px #00f7ff,
-                0 0 20px #00f7ff;
-        }
+    .container {
+        text-align: center;
+        z-index: 2;
+        padding: 20px;
+    }
 
-        button {
-            background: transparent;
-            border: 2px solid #ff00ff;
-            color: #ff00ff;
-            padding: 15px 30px;
-            font-size: 1.2rem;
-            border-radius: 10px;
-            cursor: pointer;
-            text-shadow: 0 0 10px #ff00ff;
-            box-shadow:
-                0 0 10px #ff00ff,
-                inset 0 0 10px #ff00ff;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
+    h1 {
+        color: #ffe066;
+        font-size: 1.6rem;
+        margin-bottom: 30px;
+        text-shadow:
+            0 0 10px #ffe066,
+            0 0 30px #ffea00;
+    }
 
-        button:hover {
-            transform: scale(1.05);
-            box-shadow:
-                0 0 20px #ff00ff,
-                inset 0 0 20px #ff00ff;
-        }
+    button {
+        background: transparent;
+        border: 2px solid #ff4dd2;
+        color: #ff4dd2;
+        padding: 15px 35px;
+        font-size: 1.2rem;
+        border-radius: 12px;
+        cursor: pointer;
+        box-shadow: 0 0 25px #ff4dd2;
+        text-shadow: 0 0 10px #ff4dd2;
+    }
 
-        .clave {
-            margin-top: 30px;
-            font-size: 3rem;
-            color: #00ff88;
-            display: none;
-            text-shadow:
-                0 0 10px #00ff88,
-                0 0 20px #00ff88,
-                0 0 40px #00ff88;
-        }
+    .clave {
+        margin-top: 30px;
+        font-size: 4rem;
+        color: #00ff88;
+        display: none;
+        text-shadow:
+            0 0 15px #00ff88,
+            0 0 40px #00ff88,
+            0 0 70px #00ff88;
+    }
 
-        @media (min-width: 768px) {
-            h1 {
-                font-size: 2.4rem;
-            }
-            .clave {
-                font-size: 4rem;
-            }
+    /* PARTÍCULAS */
+    .firework, .heart {
+        position: absolute;
+        animation: explode 3s ease-out forwards;
+        pointer-events: none;
+    }
+
+    .firework {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+    }
+
+    .heart {
+        font-size: 18px;
+    }
+
+    @keyframes explode {
+        from {
+            transform: scale(1);
+            opacity: 1;
         }
-    </style>
+        to {
+            transform: translate(var(--x), var(--y)) scale(0);
+            opacity: 0;
+        }
+    }
+
+    @media (min-width: 768px) {
+        h1 { font-size: 2.2rem; }
+        .clave { font-size: 5rem; }
+    }
+</style>
 </head>
-<body>
-    <div class="container">
-        <h1>Aquí está tu clave de acceso</h1>
-        <button onclick="mostrarClave()">Mostrar clave</button>
-        <div id="clave" class="clave">777</div>
-    </div>
 
-    <script>
-        function mostrarClave() {
-            document.getElementById("clave").style.display = "block";
-        }
-    </script>
+<body>
+<div class="container">
+    <h1>AQUI ESTA TU CLAVE DE ACCESO MI AMORCITO 💛</h1>
+    <button onclick="mostrarClave()">¡CLIC AQUI!</button>
+    <div id="clave" class="clave">122</div>
+</div>
+
+<script>
+let audioCtx;
+
+function mostrarClave() {
+    document.getElementById("clave").style.display = "block";
+    iniciarAudio();
+    lanzarCelebracion(7000); // 7 segundos
+}
+
+// 🔊 Audio
+function iniciarAudio() {
+    if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+}
+
+function sonidoExplosion() {
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+
+    osc.type = "triangle";
+    osc.frequency.setValueAtTime(120, audioCtx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(35, audioCtx.currentTime + 0.5);
+
+    gain.gain.setValueAtTime(0.5, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
+
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+
+    osc.start();
+    osc.stop(audioCtx.currentTime + 0.5);
+}
+
+// 🎆💖 Celebración
+function lanzarCelebracion(duracion) {
+    const intervalo = setInterval(() => {
+        lanzarFuegos();
+        lanzarCorazones();
+        sonidoExplosion();
+    }, 500);
+
+    setTimeout(() => clearInterval(intervalo), duracion);
+}
+
+function lanzarFuegos() {
+    for (let i = 0; i < 70; i++) {
+        const p = document.createElement("div");
+        p.className = "firework";
+
+        p.style.left = Math.random() * window.innerWidth + "px";
+        p.style.top = Math.random() * window.innerHeight + "px";
+        p.style.background =
+            ["#ff004c", "#00ff88", "#00f7ff", "#ffea00", "#ff7b00"]
+            [Math.floor(Math.random() * 5)];
+
+        p.style.setProperty("--x", (Math.random() * 800 - 400) + "px");
+        p.style.setProperty("--y", (Math.random() * 800 - 400) + "px");
+
+        document.body.appendChild(p);
+        setTimeout(() => p.remove(), 3000);
+    }
+}
+
+function lanzarCorazones() {
+    for (let i = 0; i < 25; i++) {
+        const h = document.createElement("div");
+        h.className = "heart";
+        h.innerHTML = "💖";
+
+        h.style.left = Math.random() * window.innerWidth + "px";
+        h.style.top = Math.random() * window.innerHeight + "px";
+
+        h.style.setProperty("--x", (Math.random() * 600 - 300) + "px");
+        h.style.setProperty("--y", (Math.random() * 600 - 300) + "px");
+
+        document.body.appendChild(h);
+        setTimeout(() => h.remove(), 3000);
+    }
+}
+</script>
 </body>
 </html>
