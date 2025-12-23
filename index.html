@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clave de Acceso</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle at top, #020617, #000);
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        h1 {
+            color: #00f7ff;
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            text-shadow:
+                0 0 5px #00f7ff,
+                0 0 10px #00f7ff,
+                0 0 20px #00f7ff;
+        }
+
+        button {
+            background: transparent;
+            border: 2px solid #ff00ff;
+            color: #ff00ff;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border-radius: 10px;
+            cursor: pointer;
+            text-shadow: 0 0 10px #ff00ff;
+            box-shadow:
+                0 0 10px #ff00ff,
+                inset 0 0 10px #ff00ff;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow:
+                0 0 20px #ff00ff,
+                inset 0 0 20px #ff00ff;
+        }
+
+        .clave {
+            margin-top: 30px;
+            font-size: 3rem;
+            color: #00ff88;
+            display: none;
+            text-shadow:
+                0 0 10px #00ff88,
+                0 0 20px #00ff88,
+                0 0 40px #00ff88;
+        }
+
+        @media (min-width: 768px) {
+            h1 {
+                font-size: 2.4rem;
+            }
+            .clave {
+                font-size: 4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Aquí está tu clave de acceso</h1>
+        <button onclick="mostrarClave()">Mostrar clave</button>
+        <div id="clave" class="clave">777</div>
+    </div>
+
+    <script>
+        function mostrarClave() {
+            document.getElementById("clave").style.display = "block";
+        }
+    </script>
+</body>
+</html>
